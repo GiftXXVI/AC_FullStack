@@ -1,4 +1,7 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Table from "react-bootstrap/Table";
+import Container from "react-bootstrap/Container";
 import "./App.css";
 
 function App() {
@@ -20,67 +23,66 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>{!agent ? "Loading..." : "Account Code: " + agent.accountCode}</p>
-        <p>{!agent ? "Loading..." : "Company Name: " + agent.companyName}</p>
+    <Container>
+      <div class="jumbotron">
+      <h1>{!agent ? "Loading..." : agent.companyName + " (" + agent.accountCode + ")"}</h1>
+        
         <p>
-          {
-            (!agent) ? "Loading..." :
-              "Address:" + agent.branchAddress.houseNumber + "\n" +
-              " " + agent.branchAddress.address1 + "\n" +
-              "," + agent.branchAddress.locality + "\n" +
-              "," + agent.branchAddress.town + "\n" +
-              "," + agent.branchAddress.county + "\n" +
-              "," + agent.branchAddress.postcode + "\n"
-          }
+          {!agent
+            ? "Loading..."
+            : agent.branchAddress.houseNumber +
+              " " +
+              agent.branchAddress.address1 +
+              ", "}{" "}
+          <br />
+          {!agent ? "Loading..." : agent.branchAddress.locality + ", "} <br />
+          {!agent ? "Loading..." : agent.branchAddress.town + ", "} <br />
+          {!agent ? "Loading..." : agent.branchAddress.county + ", "} <br />
+          {!agent ? "Loading..." : agent.branchAddress.postcode} <br />
         </p>
-      </header>
-      <table>
-          <thead>
+      </div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Address</th>
+            <th>Erected At</th>
+            <th>Board Type Title</th>
+            <th>Expiry Age</th>
+            <th>Fee Charged</th>
+          </tr>
+        </thead>
+        <tbody>
+          {properties.map((prop) => (
             <tr>
-              <th>Address</th>
-              <th>Erected At</th>
-              <th>Board Type Title</th>
-              <th>Expiry Age</th>
-              <th>Fee Charged</th>
+              <td>
+                {prop.address.houseNumber + " " + prop.address.address1 + ", "}
+                <br />
+                {prop.address.locality + ", "}
+                <br />
+                {prop.address.town + ", "}
+                <br />
+                {prop.address.county + ", "}
+                <br />
+                {prop.address.postcode}
+              </td>
+              <td>{prop.erectedAt}</td>
+              <td>{prop.erectedBoardType.title}</td>
+              <td>{prop.erectedBoardType.expiryAge}</td>
+              <td>
+                {prop.erectedBoardType.title == "Sold"
+                  ? prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
+                  : prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {properties.map((prop) => (
-              <tr>
-                <td>
-                  {prop.address.houseNumber + " " + prop.address.address1 + ", "}
-                  <br />
-                  {prop.address.locality + ", "}
-                  <br />
-                  {prop.address.town + ", "}
-                  <br />
-                  {prop.address.county + ", "}
-                  <br />
-                  {prop.address.postcode}
-                </td>
-                <td>{prop.erectedAt}</td>
-                <td>{prop.erectBoardType.title}</td>
-                <td>{prop.expiryAge}</td>
-                <td>{prop.erectBoardType.title == "Sold" ? prop.totalFeeCharged + (prop.totalFeeCharged * 7.5 / 100) : prop.totalFeeCharged + (prop.totalFeeCharged * 4 / 100)}</td>
-              </tr>
-            ))}
-            {
-              totalFees = properties.reduce(function (total, prop) {
-                if (prop.erectBoardType.title == "Sold") {
-                  return total + prop.totalFeeCharged + (prop.totalFeeCharged * 7.5 / 100)
-                } else {
-                  return total + prop.totalFeeCharged + (prop.totalFeeCharged * 4 / 100)
-                }
-              }
-              )}
-            <tr>
-              <td colspan="3"></td><td>{totalFees}</td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
+          ))}
+
+          <tr>
+            <td colspan="4"></td>
+            <td>totalFees</td>
+          </tr>
+        </tbody>
+      </Table>
+    </Container>
   );
 }
 
