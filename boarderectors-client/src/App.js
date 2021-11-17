@@ -25,15 +25,14 @@ function App() {
   return (
     <Container>
       <div class="jumbotron">
-      <h1>{!agent ? "Loading..." : agent.companyName + " (" + agent.accountCode + ")"}</h1>
-        
-        <p>
+        <h1 class="display-4">{!agent ? "Loading..." : agent.companyName + " (" + agent.accountCode + ")"}</h1>
+        <p class="lead">
           {!agent
             ? "Loading..."
             : agent.branchAddress.houseNumber +
-              " " +
-              agent.branchAddress.address1 +
-              ", "}{" "}
+            " " +
+            agent.branchAddress.address1 +
+            ", "}{" "}
           <br />
           {!agent ? "Loading..." : agent.branchAddress.locality + ", "} <br />
           {!agent ? "Loading..." : agent.branchAddress.town + ", "} <br />
@@ -75,7 +74,6 @@ function App() {
               </td>
             </tr>
           ))}
-
           <tr>
             <td colspan="4"></td>
             <td>totalFees</td>
