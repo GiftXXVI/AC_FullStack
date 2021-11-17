@@ -1,0 +1,23 @@
+{
+  "name": "AC_FullStack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiftXXVI/AC_FullStack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GiftXXVI/AC_FullStack/issues"
+  },
+  "homepage": "https://github.com/GiftXXVI/AC_FullStack#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
