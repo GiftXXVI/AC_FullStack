@@ -26,26 +26,23 @@ function App() {
         <p>{!agent ? "Loading..." : "Account Code: " + agent.accountCode}</p>
         <p>{!agent ? "Loading..." : "Company Name: " + agent.companyName}</p>
         <p>
-          {!agent
-            ? "Loading..."
-            : "Address:" +
-              agent.branchAddress.houseNumber +
-              " " +
-              agent.branchAddress.address1 +
-              "," +
-              agent.branchAddress.locality +
-              "," +
-              agent.branchAddress.town +
-              "," +
-              agent.branchAddress.county +
-              "," +
-              agent.branchAddress.postcode}
+          {
+            (!agent) ? "Loading..." :
+              "Address:" + agent.branchAddress.houseNumber + "\n" +
+              " " + agent.branchAddress.address1 + "\n" +
+              "," + agent.branchAddress.locality + "\n" +
+              "," + agent.branchAddress.town + "\n" +
+              "," + agent.branchAddress.county + "\n" +
+              "," + agent.branchAddress.postcode + "\n"
+          }
         </p>
         <table>
           <thead>
             <tr>
               <th>Address</th>
-              <th>Erected Board Type</th>
+              <th>Erected At</th>
+              <th>Board Type Title</th>
+              <th>Expiry Age</th>
               <th>Fee Charged</th>
             </tr>
           </thead>
@@ -53,10 +50,7 @@ function App() {
             {properties.map((prop) => (
               <tr>
                 <td>
-                  {prop.address.houseNumber +
-                    " " +
-                    prop.address.address1 +
-                    ", "}
+                  {prop.address.houseNumber + " " + prop.address.address1 + ", "}
                   <br />
                   {prop.address.locality + ", "}
                   <br />
@@ -66,10 +60,24 @@ function App() {
                   <br />
                   {prop.address.postcode}
                 </td>
-                <td>{prop.id}</td>
-                <td>{prop.id}</td>
+                <td>{prop.erectedAt}</td>
+                <td>{prop.erectBoardType.title}</td>
+                <td>{prop.expiryAge}</td>
+                <td>{prop.erectBoardType.title == "Sold" ? prop.totalFeeCharged + (prop.totalFeeCharged * 7.5 / 100) : prop.totalFeeCharged + (prop.totalFeeCharged * 4 / 100)}</td>
               </tr>
             ))}
+            {
+              totalFees = properties.reduce(function (total, prop) {
+                if (prop.erectBoardType.title == "Sold") {
+                  return total + prop.totalFeeCharged + (prop.totalFeeCharged * 7.5 / 100)
+                } else {
+                  return total + prop.totalFeeCharged + (prop.totalFeeCharged * 4 / 100)
+                }
+              }
+              )}
+            <tr>
+              <td colspan="3"></td><td>{totalFees}</td>
+            </tr>
           </tbody>
         </table>
       </header>
