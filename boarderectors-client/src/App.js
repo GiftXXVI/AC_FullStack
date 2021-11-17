@@ -20,10 +20,10 @@ function App() {
       .then((res) => res.json())
       .then((properties) => {
         setProperties(properties);
-        total = properties.reduce((total,currentItem) =>  {
-          if(currentItem.erectedBoardType.title == "Sold"){
+        total = properties.reduce((total, currentItem) => {
+          if (currentItem.erectedBoardType.title == "Sold") {
             total += prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
-          }else{
+          } else {
             total += prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100
           }
         })
@@ -48,46 +48,48 @@ function App() {
           {!agent ? "Loading..." : agent.branchAddress.postcode} <br />
         </p>
       </div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Address</th>
-            <th>Erected At</th>
-            <th>Board Type Title</th>
-            <th>Expiry Age</th>
-            <th>Fee Charged</th>
-          </tr>
-        </thead>
-        <tbody>
-          {properties.map((prop) => (
+      <Container>
+        <Table striped bordered hover>
+          <thead>
             <tr>
-              <td>
-                {prop.address.houseNumber + " " + prop.address.address1 + ", "}
-                <br />
-                {prop.address.locality + ", "}
-                <br />
-                {prop.address.town + ", "}
-                <br />
-                {prop.address.county + ", "}
-                <br />
-                {prop.address.postcode}
-              </td>
-              <td>{prop.erectedAt}</td>
-              <td>{prop.erectedBoardType.title}</td>
-              <td>{prop.erectedBoardType.expiryAge}</td>
-              <td>
-                {prop.erectedBoardType.title == "Sold"
-                  ? prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
-                  : prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100}
-              </td>
+              <th>Address</th>
+              <th>Erected At</th>
+              <th>Board Type Title</th>
+              <th>Expiry Age</th>
+              <th>Fee Charged</th>
             </tr>
-          ))}
-          <tr>
-            <td colSpan="4"></td>
-            <td>{total}</td>
-          </tr>
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {properties.map((prop) => (
+              <tr>
+                <td>
+                  {prop.address.houseNumber + " " + prop.address.address1 + ", "}
+                  <br />
+                  {prop.address.locality + ", "}
+                  <br />
+                  {prop.address.town + ", "}
+                  <br />
+                  {prop.address.county + ", "}
+                  <br />
+                  {prop.address.postcode}
+                </td>
+                <td>{prop.erectedAt}</td>
+                <td>{prop.erectedBoardType.title}</td>
+                <td>{prop.erectedBoardType.expiryAge}</td>
+                <td>
+                  {prop.erectedBoardType.title == "Sold"
+                    ? prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
+                    : prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100}
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan="4"></td>
+              <td>{total}</td>
+            </tr>
+          </tbody>
+        </Table>
+      </Container>
     </Container>
   );
 }
