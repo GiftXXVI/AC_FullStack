@@ -7,6 +7,7 @@ import "./App.css";
 function App() {
   const [agent, setAgent] = React.useState(null);
   const [properties, setProperties] = React.useState([]);
+  const total = 0;
 
   React.useEffect(() => {
     fetch("/agents/ACC001")
@@ -19,6 +20,13 @@ function App() {
       .then((res) => res.json())
       .then((properties) => {
         setProperties(properties);
+        total = properties.reduce((total,currentItem) =>  {
+          if(currentItem.erectedBoardType.title == "Sold"){
+            total += prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
+          }else{
+            total += prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100
+          }
+        })
       });
   }, []);
 
@@ -75,8 +83,8 @@ function App() {
             </tr>
           ))}
           <tr>
-            <td colspan="4"></td>
-            <td>totalFees</td>
+            <td colSpan="4"></td>
+            <td>{total}</td>
           </tr>
         </tbody>
       </Table>
