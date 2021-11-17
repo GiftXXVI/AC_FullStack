@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
@@ -36,7 +35,8 @@ function App() {
               "," + agent.branchAddress.postcode + "\n"
           }
         </p>
-        <table>
+      </header>
+      <table>
           <thead>
             <tr>
               <th>Address</th>
@@ -80,7 +80,6 @@ function App() {
             </tr>
           </tbody>
         </table>
-      </header>
     </div>
   );
 }
