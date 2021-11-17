@@ -17,6 +17,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://boarderectors-api.accentstaging.co.uk/",
   "eslintConfig": {
     "extends": [
       "react-app",
