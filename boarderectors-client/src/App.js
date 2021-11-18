@@ -49,9 +49,7 @@ function App() {
           <thead>
             <tr>
               <th>Address</th>
-              <th>Erected At</th>
               <th>Board Type Title</th>
-              <th>Expiry Age</th>
               <th>Fee Charged</th>
             </tr>
           </thead>
@@ -72,28 +70,38 @@ function App() {
                   <br />
                   {prop.address.postcode}
                 </td>
-                <td>{prop.erectedAt}</td>
                 <td>{prop.erectedBoardType.title}</td>
-                <td>{prop.erectedBoardType.expiryAge}</td>
                 <td>
                   {prop.erectedBoardType.title == "Sold"
-                    ? prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
-                    : prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100}
+                    ? Math.round(
+                        (prop.totalFeeCharged +
+                          (prop.totalFeeCharged * 7.5) / 100 +
+                          Number.EPSILON) *
+                          100
+                      ) / 100
+                    : Math.round(
+                        (prop.totalFeeCharged +
+                          (prop.totalFeeCharged * 4) / 100 +
+                          Number.EPSILON) *
+                          100
+                      ) / 100}
                 </td>
               </tr>
             ))}
             <tr>
-              <td colSpan="4"><b>Total Fees</b></td>
+              <td colSpan="2">
+                <b>Grand Total</b>
+              </td>
               <td>
-              {properties.reduce((total, current) => {
+                {properties.reduce((total, current) => {
                   var val = parseFloat(current.totalFeeCharged);
                   if (current.erectedBoardType.title == "Sold") {
                     total = total + val + (val * 7.5) / 100;
                   } else {
                     total = total + val + (val * 4) / 100;
                   }
-                  return total;
-                },0)}
+                  return Math.round((total + Number.EPSILON) * 100) / 100;
+                }, 0)}
               </td>
             </tr>
           </tbody>
