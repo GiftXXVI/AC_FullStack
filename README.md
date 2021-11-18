@@ -1,6 +1,6 @@
 # AC_FullStack
 ## Brief Background
-This project has been created using ReactJS and Node.js. I chose this stack because it is the industry standard and a suitable stack for the task of creating a FrontEnd application to coomunicate to an API backend. This is my first experience with this stack (and with server side JavaScript). I enjoyed the experience and will be looking to get formal training in FrontEnd Development in the next few months.
+This project has been created using ReactJS and Node.js. I chose this stack because it is the industry standard and a suitable stack for the task of creating a FrontEnd application to communicate to an API backend. This is my first experience with this stack (and with server side JavaScript). I enjoyed the experience and will be looking to get formal training in FrontEnd Development in the next few months.
 
 ## Installing Dependencies
 ### Node and NPM
@@ -23,11 +23,11 @@ npm start
 Once tha aplication starts, instructions for testing a `200` response scenario and a `404` response scenario are posted on the home page with button links for each scenario. There is limited navigation with a `Home` link in the navigation bar.
 
 To test displaying from the API, use the following link to see the output from a `200` response:
-```bash
+```http
 http://localhost:3000/agent/ACC001
 ```
 
 and the following link to see the output from a `404` response:
-```bash
+```http
 http://localhost:3000/agent/ACC002
 ```
