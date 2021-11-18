@@ -3,11 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import "./App.css";
+import { useParams } from "react-router-dom";
 
 function App() {
   const [agent, setAgent] = React.useState(null);
   const [properties, setProperties] = React.useState([]);
-  const [agentcode, setAgentCode] = React.useState("ACC001");
+  const { agtcode } = useParams();
+  const [agentcode, setAgentCode] = React.useState(agtcode);
+
 
   React.useEffect(() => {
     fetch("/agents/" + agentcode)
@@ -73,7 +76,7 @@ function App() {
                 </td>
                 <td>{prop.erectedBoardType.title}</td>
                 <td>
-                  {prop.erectedBoardType.title == "Sold"
+                  {prop.erectedBoardType.title === "Sold"
                     ? Math.round(
                         (prop.totalFeeCharged +
                           (prop.totalFeeCharged * 7.5) / 100 +
@@ -96,7 +99,7 @@ function App() {
               <td>
                 {properties.reduce((total, current) => {
                   var val = parseFloat(current.totalFeeCharged);
-                  if (current.erectedBoardType.title == "Sold") {
+                  if (current.erectedBoardType.title === "Sold") {
                     total = total + val + (val * 7.5) / 100;
                   } else {
                     total = total + val + (val * 4) / 100;
