@@ -19,6 +19,9 @@ To run the application, navigate to the `boarderectors-client` directory and run
 ```bash
 npm start
 ```
+## Operation
+Once tha aplication starts, instructions for testing a `200` response scenario and a `404` response scenario are posted on the home page with button links for each scenario. There is limited navigation with a `Home` link in the navigation bar.
+
 To test displaying from the API, use the following link to see the output from a `200` response:
 ```bash
 http://localhost:3000/agent/ACC001

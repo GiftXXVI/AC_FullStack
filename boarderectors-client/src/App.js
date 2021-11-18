@@ -40,6 +40,14 @@ function App() {
   if (agenterr !== null) {
     return (
       <Container>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              Home
+            </a>
+          </li>
+        </ul>
+        <br />
         <div class="jumbotron">
           <h1 class="display-4">
             {!agenterr ? "Loading..." : "Error:" + agenterr.title}
@@ -65,6 +73,14 @@ function App() {
   } else if (agenterr === null) {
     return (
       <Container>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              Home
+            </a>
+          </li>
+        </ul>
+        <br />
         <div class="jumbotron">
           <h1 class="display-4">
             {!agent
