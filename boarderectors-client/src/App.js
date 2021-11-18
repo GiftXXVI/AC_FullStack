@@ -7,7 +7,6 @@ import "./App.css";
 function App() {
   const [agent, setAgent] = React.useState(null);
   const [properties, setProperties] = React.useState([]);
-  const [total,setTotal] = React.useState([]);
 
   React.useEffect(() => {
     fetch("/agents/ACC001")
@@ -20,28 +19,24 @@ function App() {
       .then((res) => res.json())
       .then((properties) => {
         setProperties(properties);
-        totalFees = properties.reduce((total, currentItem) => {
-          if (currentItem.erectedBoardType.title == "Sold") {
-            total += prop.totalFeeCharged + (prop.totalFeeCharged * 7.5) / 100
-          } else {
-            total += prop.totalFeeCharged + (prop.totalFeeCharged * 4) / 100
-          }
-        })
-        setTotal(totalFees)
       });
   }, []);
 
   return (
     <Container>
       <div class="jumbotron">
-        <h1 class="display-4">{!agent ? "Loading..." : agent.companyName + " (" + agent.accountCode + ")"}</h1>
+        <h1 class="display-4">
+          {!agent
+            ? "Loading..."
+            : agent.companyName + " (" + agent.accountCode + ")"}
+        </h1>
         <p class="lead">
           {!agent
             ? "Loading..."
             : agent.branchAddress.houseNumber +
-            " " +
-            agent.branchAddress.address1 +
-            ", "}{" "}
+              " " +
+              agent.branchAddress.address1 +
+              ", "}{" "}
           <br />
           {!agent ? "Loading..." : agent.branchAddress.locality + ", "} <br />
           {!agent ? "Loading..." : agent.branchAddress.town + ", "} <br />
@@ -64,7 +59,10 @@ function App() {
             {properties.map((prop) => (
               <tr>
                 <td>
-                  {prop.address.houseNumber + " " + prop.address.address1 + ", "}
+                  {prop.address.houseNumber +
+                    " " +
+                    prop.address.address1 +
+                    ", "}
                   <br />
                   {prop.address.locality + ", "}
                   <br />
@@ -85,8 +83,18 @@ function App() {
               </tr>
             ))}
             <tr>
-              <td colSpan="4"></td>
-              <td>{total}</td>
+              <td colSpan="4"><b>Total Fees</b></td>
+              <td>
+              {properties.reduce((total, current) => {
+                  var val = parseFloat(current.totalFeeCharged);
+                  if (current.erectedBoardType.title == "Sold") {
+                    total = total + val + (val * 7.5) / 100;
+                  } else {
+                    total = total + val + (val * 4) / 100;
+                  }
+                  return total;
+                },0)}
+              </td>
             </tr>
           </tbody>
         </Table>
