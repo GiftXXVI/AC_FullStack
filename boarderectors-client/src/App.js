@@ -7,15 +7,16 @@ import "./App.css";
 function App() {
   const [agent, setAgent] = React.useState(null);
   const [properties, setProperties] = React.useState([]);
+  const [agentcode, setAgentCode] = React.useState("ACC001");
 
   React.useEffect(() => {
-    fetch("/agents/ACC001")
+    fetch("/agents/" + agentcode)
       .then((res) => res.json())
       .then((agent) => setAgent(agent));
   }, []);
 
   React.useEffect(() => {
-    fetch("/agents/ACC001/properties")
+    fetch("/agents/" + agentcode + "/properties")
       .then((res) => res.json())
       .then((properties) => {
         setProperties(properties);
