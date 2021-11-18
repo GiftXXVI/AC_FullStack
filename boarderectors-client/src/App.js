@@ -10,16 +10,15 @@ function App() {
   const [properties, setProperties] = React.useState([]);
   const { agtcode } = useParams();
   const [agentcode, setAgentCode] = React.useState(agtcode);
-  const [agenterr, setAgentErrors] = React.useState([])
-  const [properr, setPropErrors] = React.useState([])
-
+  const [agenterr, setAgentErrors] = React.useState(null);
+  const [properr, setPropErrors] = React.useState(null);
 
   React.useEffect(() => {
     fetch("/agents/" + agentcode)
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          setAgentErrors(data)
+          setAgentErrors(data);
         } else {
           setAgent(data);
         }
@@ -31,32 +30,39 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          setPropErrors(data)
+          setPropErrors(data);
         } else {
           setProperties(data);
         }
       });
   }, []);
 
-  if (agenterr) {
+  if (agenterr !== null) {
     return (
       <Container>
-        An Error Occured
         <div class="jumbotron">
           <h1 class="display-4">
-            {!agenterr
-              ? "Loading..."
-              : agenterr.title + " (" + agenterr.type + ")"}
+            {!agenterr ? "Loading..." : "Error:" + agenterr.title}
           </h1>
           <p class="lead">
-            {!agenterr ? "Loading..." : agenterr.detail + ", "} <br />
-            {!agenterr ? "Loading..." : agenterr.instance + ", "} <br />
+            {agenterr.title === "Not Found"
+              ? "Please recheck the agent code."
+              : " "}{" "}
+            <br />
+            {!agenterr ? (
+              "Loading..."
+            ) : (
+              <p>
+                {" "}
+                More information can be found at{" "}
+                <a href={agenterr.type}> Link</a>
+              </p>
+            )}
           </p>
         </div>
       </Container>
-    )
-  }
-  else if (!agenterr) {
+    );
+  } else if (agenterr === null) {
     return (
       <Container>
         <div class="jumbotron">
@@ -69,9 +75,9 @@ function App() {
             {!agent
               ? "Loading..."
               : agent.branchAddress.houseNumber +
-              " " +
-              agent.branchAddress.address1 +
-              ", "}{" "}
+                " " +
+                agent.branchAddress.address1 +
+                ", "}{" "}
             <br />
             {!agent ? "Loading..." : agent.branchAddress.locality + ", "} <br />
             {!agent ? "Loading..." : agent.branchAddress.town + ", "} <br />
@@ -80,7 +86,7 @@ function App() {
           </p>
         </div>
 
-        {!properr ?
+        {properr === null ? (
           <Container>
             <Table striped bordered hover>
               <thead>
@@ -111,17 +117,17 @@ function App() {
                     <td>
                       {prop.erectedBoardType.title === "Sold"
                         ? Math.round(
-                          (prop.totalFeeCharged +
-                            (prop.totalFeeCharged * 7.5) / 100 +
-                            Number.EPSILON) *
-                          100
-                        ) / 100
+                            (prop.totalFeeCharged +
+                              (prop.totalFeeCharged * 7.5) / 100 +
+                              Number.EPSILON) *
+                              100
+                          ) / 100
                         : Math.round(
-                          (prop.totalFeeCharged +
-                            (prop.totalFeeCharged * 4) / 100 +
-                            Number.EPSILON) *
-                          100
-                        ) / 100}
+                            (prop.totalFeeCharged +
+                              (prop.totalFeeCharged * 4) / 100 +
+                              Number.EPSILON) *
+                              100
+                          ) / 100}
                     </td>
                   </tr>
                 ))}
@@ -144,12 +150,12 @@ function App() {
               </tbody>
             </Table>
           </Container>
-          : ""
-        }
+        ) : (
+          ""
+        )}
       </Container>
     );
   }
-
 }
 
 export default App;
