@@ -10,7 +10,8 @@ function App() {
   const [properties, setProperties] = React.useState([]);
   const { agtcode } = useParams();
   const [agentcode, setAgentCode] = React.useState(agtcode);
-  const [errors, setErrors] = React.useState([])
+  const [agenterr, setAgentErrors] = React.useState([])
+  const [properr, setPropErrors] = React.useState([])
 
 
   React.useEffect(() => {
@@ -18,8 +19,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          console.log(data)
-          setErrors(data)
+          setAgentErrors(data)
         } else {
           setAgent(data);
         }
@@ -31,18 +31,28 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          console.log(data)
-          setErrors(data)
+          setPropErrors(data)
         } else {
           setProperties(data);
         }
       });
   }, []);
 
-  if (errors) {
+  if (agenterr || properr) {
     return(
       <Container>
         An Error Occured
+        <div class="jumbotron">
+          <h1 class="display-4">
+            {!agenterr
+              ? "Loading..."
+              : agenterr.title + " (" + agenterr.type + ")"}
+          </h1>
+          <p class="lead">
+            {!agenterr ? "Loading..." : agenterr.detail + ", "} <br />
+            {!agenterr ? "Loading..." : agenterr.instance + ", "} <br />
+          </p>
+        </div>
       </Container>
     )
   } else {
